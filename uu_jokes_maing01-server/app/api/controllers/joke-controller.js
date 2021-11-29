@@ -8,6 +8,12 @@ class JokeController {
     get(ucEnv) {
         return JokeAbl.get(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
     }
+
+    async getImageData(ucEnv) {
+        let dtoIn = ucEnv.getDtoIn();
+        let dtoOut = await JokeAbl.getImageData(ucEnv.getUri().getAwid(), dtoIn);
+        return ucEnv.setBinaryDtoOut(dtoOut, dtoIn.contentDisposition);
+    }
 }
 
 module.exports = new JokeController();

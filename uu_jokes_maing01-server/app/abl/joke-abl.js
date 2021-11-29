@@ -16,6 +16,10 @@ const WARNINGS = {
     getUnsupportedKeys: {
         code: `${Errors.Get.UC_CODE}unsupportedKeys`
     },
+    getImageDataUnsupportedKeys: {
+        code: `${Errors.GetImageData.UC_CODE}unsupportedKeys`
+    }
+
 };
 
 const expectedStateList = ["active", "underConstruction"]
@@ -127,6 +131,30 @@ class JokeAbl {
         }
         // HDS-3 
         return {...uuJoke, uuAppErrorMap };
+    }
+
+    async getImageData(awid, dtoIn) {
+        // hds 1
+        // hds 1.1
+        let validationResult = this.validator.validate("jokeGetImageDataDtoInType", dtoIn);
+        // hds 1.2, 1.3 // A1, A2
+        let uuAppErrorMap = ValidationHelper.processValidationResult(dtoIn, validationResult,
+            WARNINGS.getImageDataUnsupportedKeys.code, Errors.GetImageData.InvalidDtoIn);
+
+        // hds 2
+        let dtoOut;
+        try {
+            dtoOut = await this.jokeImageDao.getDataByCode(awid, dtoIn.image);
+        } catch (e) {
+            if (e.code === "uu-app-binarystore/objectNotFound") { // A3
+                throw new Errors.GetImageData.JokeImageDoesNotExist({ uuAppErrorMap }, { image: dtoIn.image });
+            }
+            throw e;
+        }
+
+        // hds 3
+        dtoOut.uuAppErrorMap = uuAppErrorMap;
+        return dtoOut;
     }
 }
 
