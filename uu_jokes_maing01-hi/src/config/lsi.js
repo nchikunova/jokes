@@ -13,6 +13,10 @@ const Lsi = {
       cs: "O aplikaci",
       en: "About Application",
     },
+    some: {
+      cs: "O aplikaci",
+      en: "Something Application",
+    },
   },
 
   about: {

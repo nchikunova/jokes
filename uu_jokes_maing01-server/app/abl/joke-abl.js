@@ -41,9 +41,9 @@ class JokeAbl {
             throw new Errors.Create.jokesDoesNotExist({ uuAppErrorMap }, { awid })
         }
 
-        if (uuJokeMain.state !== 'active' && uuJokeMain.state !== 'underConstruction') {
-            throw new Errors.Create.jokesIsNotInCorrectState({ uuAppErrorMap }, { expectedStateList, actualState: uuJokeMain.state })
-        }
+        if (uuJokeMain?.state !== 'underConstruction' && uuJokeMain?.state !== 'active') {
+            throw new Errors.Create.jokesIsNotInCorrectState({uuAppErrorMap}, {expectedState: "active", awid })
+          }
 
         // HDS-2 
         let jokeImage;
@@ -111,10 +111,9 @@ class JokeAbl {
             throw new Errors.Get.JokesDoesNotExist({ uuAppErrorMap }, { awid });
         }
         // Must be only in active state for testing added state "underConstruction"
-        if (uuJokes.state !== "active") {
-            throw new Errors.Get.JokesIsNotInCorrectState({ uuAppErrorMap }, { awid });
-        }
-
+        if (uuJokeMain.state !== 'active') {
+            throw new Errors.Get.JokesIsNotInCorrectState({uuAppErrorMap}, {awid, expectedState: "active" })
+          }
         // HDS-1 
         const validationResult = this.validator.validate("jokeGetDtoInType", dtoIn);
         uuAppErrorMap = ValidationHelper.processValidationResult(
