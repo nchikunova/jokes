@@ -1,6 +1,6 @@
 import UU5 from "uu5g04";
 import "uu5g04-bricks";
-import { createVisualComponent, useState, useRef } from "uu5g04-hooks";
+import { createVisualComponent, useState} from "uu5g04-hooks";
 import Css from "../bricks/itemList.css";
 import "uu_plus4u5g01-bricks";
 import {ItemListContext} from '../core/item-list/context/context';

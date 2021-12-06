@@ -1,7 +1,7 @@
 import Config from './config/config'
 
 const deleteButton = () => Config.Css.css `
-margin-left: 300px
+margin-left: 430px
 `;
 
 const itemList = () => Config.Css.css `
