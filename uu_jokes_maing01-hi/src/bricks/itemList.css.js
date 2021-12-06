@@ -1,20 +1,27 @@
 import Config from './config/config'
 
-const item = () => Config.Css.css `
-margin-left: 250px
+const deleteButton = () => Config.Css.css `
+margin-left: 300px
 `;
 
 const itemList = () => Config.Css.css `
     display: flex;
-    flex-direction: column;
-`;
+    flex-direction: column;`;
 
 const wrapper = () => Config.Css.css `
     margin-left: 20px
 `;
+const item = () => Config.Css.css `
+border-radius: 10px;
+border-color: blueviolet;
+`;
+
+
+
 
 export default {
-    item,
+    deleteButton,
     itemList,
-    wrapper
+    wrapper,
+    item
 }

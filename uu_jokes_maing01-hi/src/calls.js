@@ -38,6 +38,10 @@ let Calls = {
     return await Calls.getWorkspace();
   },
 
+  loadItemListInstance(dtoIn) {
+    let commandUri = Calls.getCommandUri("itemList/load");
+    return Calls.call("get", commandUri, dtoIn);
+  },
   /*
   For calling command on specific server, in case of developing client site with already deployed
   server in uuCloud etc. You can specify url of this application (or part of url) in development
