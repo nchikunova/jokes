@@ -70,8 +70,7 @@ export const ItemList = createVisualComponent({
           <UU5.Bricks.Li key={item.id}>
             <UU5.Bricks.Card className="uu5-common-padding-s" width={500}>
             <UU5.Bricks.Text content={item.name}/>
-            
-            {/* <UU5.Bricks.Text content={item.desc}/> */}
+            <UU5.Bricks.Text content={item.desc}/>
             <UU5.Bricks.Rating value={item.rate}/>
             <UU5.Bricks.Button className={Css.deleteButton()} colorSchema="red" borderRadius="12px" 
             onClick={()=>onDelete(item.id)}><UU5.Bricks.Icon
