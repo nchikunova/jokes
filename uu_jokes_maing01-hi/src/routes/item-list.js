@@ -56,6 +56,15 @@ export const ItemList = createVisualComponent({
     function onDelete(id) {
       props.setItemList(itemList.filter(value => value.id !== id ))
     }
+
+    
+    function onHandleButtonClick(item){
+      props.modal.current.open({
+        header: item.name,
+        content: item.desc,
+        footer: <UU5.Bricks.Button content="Close" onClick={props.modal.current.close}/>
+      })
+    }
     //@@viewOn:private
     //@@viewOff:private
 
@@ -70,15 +79,19 @@ export const ItemList = createVisualComponent({
         {itemList.slice(0, props.show).map(item => (
           <UU5.Bricks.Li key={item.id}>
           <UU5.Bricks.Card className="uu5-common-padding-s" width={500}>
-          <UU5.Bricks.LinkModal
+            {/* One more solution for modal window */}
+          {/* <UU5.Bricks.LinkModal
             children={   
               <div>       
             <UU5.Bricks.Text content={item.name}/>
               <UU5.Bricks.Rating value={item.rate}/>
-              {/* <UU5.Bricks.Text content={item.desc}/> */}
               </div> }
                 component={<UU5.Bricks.Text content={item.desc}/>
-              }/>
+              }/> */}
+              <UU5.Bricks.Text content={item.name}/>
+              <UU5.Bricks.Text content={item.desc}/>
+              <UU5.Bricks.Rating value={item.rate}/>
+              <UU5.Bricks.Button className = {Css.showMore()} content="more details..." onClick={() => onHandleButtonClick(item)}/>
                 <UU5.Bricks.Button className={Css.deleteButton()} colorSchema="red" borderRadius="12px" 
                 onClick={()=>onDelete(item.id)}><UU5.Bricks.Icon
                 icon="plus4u5-trash-can"/></UU5.Bricks.Button>   

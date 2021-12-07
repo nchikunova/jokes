@@ -9,12 +9,17 @@ const itemList = () => Config.Css.css `
     flex-direction: column;`;
 
 const wrapper = () => Config.Css.css `
-    margin-left: 20px
+    margin-left: 20px;
 `;
+
 const item = () => Config.Css.css `
 border-radius: 10px;
 border-color: blueviolet;
 `;
+const showMore = () => Config.Css.css `
+margin-left: 20px;
+border-radius: 8px;
+`
 
 
 
@@ -23,5 +28,6 @@ export default {
     deleteButton,
     itemList,
     wrapper,
-    item
+    item,
+    showMore
 }

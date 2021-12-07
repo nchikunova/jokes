@@ -1,6 +1,6 @@
 import UU5 from "uu5g04";
 import "uu5g04-bricks";
-import { createVisualComponent, useState} from "uu5g04-hooks";
+import { createVisualComponent, useState, useRef} from "uu5g04-hooks";
 import Css from "../bricks/itemList.css";
 import "uu_plus4u5g01-bricks";
 import {ItemListContext} from '../core/item-list/context/context';
@@ -47,6 +47,7 @@ export const Some = createVisualComponent({
 
   render(props) {
     const [show, setShow] = useState(2)
+    const modalRef = useRef();
     const [itemList, setItemList] = useState([
       {
         id: 1,
@@ -92,9 +93,9 @@ export const Some = createVisualComponent({
     }
 
 
-    const onDelete=(id) => {
-      setItemList(itemList.filter(value => value.id !== id ))
-    }
+    // const onDelete=(id) => {
+    //   setItemList(itemList.filter(value => value.id !== id ))
+    // }
     function loadMore(){
         setShow(prev => prev +2)
   }
@@ -111,15 +112,14 @@ export const Some = createVisualComponent({
       <div className={Css.wrapper()}{...attrs}>
          <UU5.Bricks.Header level="1" content="Items"/>
          <UU5.Bricks.Button borderRadius="12px"content="+ item" colorSchema="green" content="+ item" onClick={handleClick}/>
-         <ItemList show={show} setItemList={setItemList}/>
+         <ItemList show={show} setItemList={setItemList} modal={modalRef}/>
 
         {itemList.length > show ?
         <UU5.Bricks.Button borderRadius="12px"content="Load more" onClick = {loadMore} colorSchema="blue" /> 
         : null}
-
+  <UU5.Bricks.Modal ref_={modalRef}/>
       </div>
       </ItemListContext.Provider>
-
     );
     //@@viewOff:render
   },
