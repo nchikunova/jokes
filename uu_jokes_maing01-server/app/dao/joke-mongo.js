@@ -9,6 +9,10 @@ class JokeMongo extends UuObjectDao {
     return await super.insertOne(uuObject);
   }
 
+  async list(awid) {
+    return await super.find({awid});
+  }
+
   async get(awid, id) {
     let filter = {
       awid: awid,

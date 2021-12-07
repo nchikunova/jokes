@@ -19,6 +19,7 @@ border-color: blueviolet;
 const showMore = () => Config.Css.css `
 margin-left: 20px;
 border-radius: 8px;
+cursor: pointer;
 `
 
 

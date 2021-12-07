@@ -10,6 +10,7 @@ import Left from "./left";
 import Bottom from "./bottom";
 import Home from "../routes/home";
 import Some from "../routes/some";
+import Jokes from "../routes/jokes";
 
 //@@viewOff:imports
 
@@ -28,6 +29,8 @@ const ROUTES = {
   "": DEFAULT_USE_CASE,
   home: { component: <Home /> },
   some: { component: <Some /> },
+  jokes: { component: <Jokes /> },
+
 
   about: { component: <About /> },
   "sys/uuAppWorkspace/initUve": { component: <InitAppWorkspace /> },

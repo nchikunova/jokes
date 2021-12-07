@@ -18,6 +18,9 @@ const WARNINGS = {
     },
     getImageDataUnsupportedKeys: {
         code: `${Errors.GetImageData.UC_CODE}unsupportedKeys`
+    },
+    listUnsupportedKeys: {
+        code: `${Errors.List.UC_CODE}unsupportedKeys`
     }
 
 };
@@ -32,6 +35,26 @@ class JokeAbl {
         this.jokeImageDao = DaoFactory.getDao("jokeImage");
     }
 
+    async list(awid, dtoIn, uuAppErrorMap) {
+        // HDS 1
+        const validationResult = this.validator.validate("jokesListDataDtoInType", dtoIn);
+        uuAppErrorMap = ValidationHelper.processValidationResult(
+            dtoIn,
+            validationResult,
+            WARNINGS.listUnsupportedKeys.code,
+            Errors.List.InvalidDtoIn
+        );
+
+        // HDS 3
+        const itemList = await this.jokeDao.list(awid)
+
+        // HDS 4
+        return {
+            ...itemList,
+            uuAppErrorMap
+        }
+    }
+
     async create(uri, dtoIn, session, uuAppErrorMap = {}) {
         const awid = uri.getAwid();
         const uuJokeMain = await this.mainDao.getByAwid(awid)
@@ -41,7 +64,7 @@ class JokeAbl {
             throw new Errors.Create.jokesDoesNotExist({ uuAppErrorMap }, { awid })
         }
 
-        if (uuJokeMain?.state !== 'underConstruction' && uuJokeMain?.state !== 'active') {
+        if (uuJokeMain.state !== 'underConstruction' && uuJokeMain.state !== 'active') {
             throw new Errors.Create.jokesIsNotInCorrectState({uuAppErrorMap}, {expectedState: "active", awid })
           }
 

@@ -13,3 +13,10 @@ const jokeGetImageDataDtoInType = shape({
     image: code().isRequired(),
     contentDisposition: oneOf(["inline", "attachment"])
 });
+
+const jokesListDataDtoInType = shape({
+    pageInfo: shape({
+        pageIndex: integer(),
+        pageSize: integer(),
+    }),
+});

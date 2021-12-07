@@ -2,6 +2,10 @@
 const JokeAbl = require("../../abl/joke-abl.js");
 
 class JokeController {
+
+  list(ucEnv) {
+    return JokeAbl.list(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
+  }
     create(ucEnv) {
         return JokeAbl.create(ucEnv.getUri(), ucEnv.getDtoIn(), ucEnv.getSession());
     }
