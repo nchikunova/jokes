@@ -127,6 +127,7 @@ class JokeAbl {
 
     async get(awid, dtoIn, session, uuAppErrorMap = {}) {
         let uuJokes = null;
+        const uuJokeMain = await this.mainDao.getByAwid(awid)
 
         uuJokes = await this.mainDao.getByAwid(awid);
 

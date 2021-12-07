@@ -1,15 +1,15 @@
 import UU5 from "uu5g04";
 import "uu5g04-bricks";
-import { createVisualComponent, useState, useRef, useDataList} from "uu5g04-hooks";
-import Css from "../bricks/itemList.css";
+import { createVisualComponent, useState, useRef, useDataList } from "uu5g04-hooks";
 import "uu_plus4u5g01-bricks";
-import {ItemListContext} from '../core/item-list/context/context';
-import ItemList from './item-list'
 import Calls from 'calls'
-
-
-import Config from "./config/config.js";
+import CustomTile from "./custom-tile.js";
+import Uu5Tiles from "uu5tilesg02";
+import Config from "../config/config.js";
 //@@viewOff:imports
+import { DataListStateResolver } from '../jokes/common/data-list-state-resolver';
+import { ModalManager } from "./common/modal-manager.js";
+import Tiles from './Tiles'
 
 const STATICS = {
   //@@viewOn:statics
@@ -41,11 +41,13 @@ export const Jokes = createVisualComponent({
     //@@viewOff:interface
 
     //@@viewOn:render
-    const {data, handlerMap} = dataListResult;
+    const { data, handlerMap } = dataListResult;
     return (
-      <div>
-    {data && JSON.stringify(data)}
-      </div>
+      <ModalManager>
+        <DataListStateResolver dataList={dataListResult}>
+          <Tiles data={data}/>
+        </DataListStateResolver>
+      </ModalManager>
     );
     //@@viewOff:render
   },
