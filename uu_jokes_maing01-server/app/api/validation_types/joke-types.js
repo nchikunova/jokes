@@ -20,3 +20,11 @@ const jokesListDataDtoInType = shape({
         pageSize: integer(),
     }),
 });
+
+const jokeUpdateDtoInType = shape({
+    id: id().isRequired(),
+    name: uu5String(255),
+    text: uu5String(4000),
+    categoryIdList: array(id(), 10),
+    image: binary()
+})

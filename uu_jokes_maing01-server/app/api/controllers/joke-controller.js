@@ -3,6 +3,10 @@ const JokeAbl = require("../../abl/joke-abl.js");
 
 class JokeController {
 
+  update(ucEnv) {
+    return JokeAbl.update(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
+  }
+
   list(ucEnv) {
     return JokeAbl.list(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
   }

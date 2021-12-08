@@ -2,10 +2,6 @@
 const { Validator } = require("uu_appg01_server").Validation;
 const { DaoFactory, ObjectStoreError } = require("uu_appg01_server").ObjectStore;
 const { ValidationHelper } = require("uu_appg01_server").AppServer;
-const { Profile, AppClientTokenService, UuAppWorkspace, UuAppWorkspaceError } = require("uu_appg01_server").Workspace;
-const { UriBuilder } = require("uu_appg01_server").Uri;
-const { LoggerFactory } = require("uu_appg01_server").Logging;
-const { AppClient } = require("uu_appg01_server");
 const Errors = require("../api/errors/joke-errors.js");
 const { BinaryStoreError } = require("uu_appg01_binarystore");
 
@@ -21,7 +17,11 @@ const WARNINGS = {
     },
     listUnsupportedKeys: {
         code: `${Errors.List.UC_CODE}unsupportedKeys`
-    }
+    },
+
+    UpdateUnsupportedKeys: {
+        code: `${Errors.Update.UC_CODE}unsupportedKeys`
+    },
 
 };
 
@@ -34,6 +34,33 @@ class JokeAbl {
         this.jokeDao = DaoFactory.getDao("joke");
         this.jokeImageDao = DaoFactory.getDao("jokeImage");
     }
+
+    async update(awid, dtoIn, uuAppErrorMap) {
+      const validationResult = this.validator.validate("jokeUpdateDtoInType", dtoIn);
+      uuAppErrorMap = ValidationHelper.processValidationResult(
+          dtoIn,
+          validationResult,
+          WARNINGS.getUnsupportedKeys.code,
+          Errors.Update.InvalidDtoIn
+      )
+
+      let updateJoke = null;
+      const uuObject = {
+          ...dtoIn,
+          awid
+      }
+
+      try {
+          updateJoke = await this.jokeDao.update(uuObject);
+      } catch (err) {
+          throw new ({ uuAppErrorMap }, err);
+      }
+
+      return {
+          ...updateJoke,
+          uuAppErrorMap
+      }
+  }
 
     async list(awid, dtoIn, uuAppErrorMap) {
         // HDS 1

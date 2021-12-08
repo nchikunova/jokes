@@ -1,20 +1,45 @@
+//@@viewOn:imports
 import UU5 from "uu5g04";
 import "uu5g04-bricks";
-import { createVisualComponent, useState, useRef, useDataList } from "uu5g04-hooks";
+import { createVisualComponent, useState, useDataList, useRef } from "uu5g04-hooks";
+import Plus4U5 from "uu_plus4u5g01";
 import "uu_plus4u5g01-bricks";
-import Calls from 'calls'
-import CustomTile from "./custom-tile.js";
-import Uu5Tiles from "uu5tilesg02";
+import Calls from "../../calls";
 import Config from "../config/config.js";
+import Lsi from "../../config/lsi.js";
+import Uu5Tiles from "uu5tilesg02";
+import CustomTile from "./custom-tile";
+import DataListStateResolver from "./common/data-list-state-resolver";
+import { ModalManager } from './common/modal-manager'
+import Tiles from "./Tiles";
+import JokesLoader from "./jokes-loader";
+import JokeContext from "./context/joke-context";
+
 //@@viewOff:imports
-import { DataListStateResolver } from '../jokes/common/data-list-state-resolver';
-import { ModalManager } from "./common/modal-manager.js";
-import Tiles from './Tiles'
 
 const STATICS = {
   //@@viewOn:statics
-  displayName: Config.TAG + "Home",
+  displayName: Config.TAG + "Some",
   //@@viewOff:statics
+};
+
+const CLASS_NAMES = {
+  // welcomeRow: () => Config.Css.css`
+  //   padding: 56px 0 20px;
+  //   max-width: 624px;
+  //   margin: 0 auto;
+  //   text-align: center;
+
+  //   ${UU5.Utils.ScreenSize.getMinMediaQueries("s", `text-align: left;`)}
+
+  //   .uu5-bricks-header {
+  //     margin-top: 8px;
+  //   }
+
+  //   .plus4u5-bricks-user-photo {
+  //     margin: 0 auto;
+  //   }
+  // `,
 };
 
 export const Jokes = createVisualComponent({
@@ -26,30 +51,29 @@ export const Jokes = createVisualComponent({
   //@@viewOn:defaultProps
   //@@viewOff:defaultProps
 
-  render() {
-    const dataListResult = useDataList({
-      handlerMap: {
-        load: Calls.jokeList,
-        createItem: Calls.createItem,
-      },
-      itemHandlerMap: {}
-    });
-    //@@viewOn:private
-    //@@viewOff:private
 
-    //@@viewOn:interface
-    //@@viewOff:interface
+  render(props) {
 
-    //@@viewOn:render
-    const { data, handlerMap } = dataListResult;
     return (
       <ModalManager>
-        <DataListStateResolver dataList={dataListResult}>
-          <Tiles data={data}/>
-        </DataListStateResolver>
+        <JokesLoader>
+          <JokeContext.Consumer>
+            {
+              (dataListResult) => {
+                return (
+                  <DataListStateResolver dataList={dataListResult}>
+                    {/* {JSON.stringify(dataListResult)} */}
+                    <Tiles />
+                  </DataListStateResolver>
+                )
+              }
+            }
+
+          </JokeContext.Consumer>
+        </JokesLoader>
       </ModalManager>
     );
-    //@@viewOff:render
+  
   },
 });
 

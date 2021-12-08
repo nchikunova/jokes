@@ -113,9 +113,21 @@ const List = {
     },
 };
 
+const Update = {
+    UC_CODE: `${JOKE_ERROR_PREFIX}update/`,
+    InvalidDtoIn: class extends JokesMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Update.UC_CODE}invalidDtoIn`;
+            this.message = "DtoIn is not valid.";
+        }
+    },
+};
+
 module.exports = {
     Create,
     Get,
     GetImageData,
-    List
+    List,
+    Update
 };

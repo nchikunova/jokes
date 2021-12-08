@@ -6,6 +6,9 @@ import Uu5Tiles from "uu5tilesg02";
 
 import CustomTile from "./custom-tile";
 //@@viewOff:imports
+import { useContextModal } from './common/modal-manager';
+import { useJoke } from './context/use-joke';
+import { JokeUpdateHeader, JokeUpdateControls, JokeUpdateForm } from "./joke-update-form/joke-update-form";
 
 const STATICS = {
     //@@viewOn:statics
@@ -19,7 +22,7 @@ export const Tiles = createVisualComponent({
 
     //@@viewOn:propTypes
     propTypes: {
-        data: UU5.PropTypes.object,
+        data: UU5.PropTypes.array,
     },
     //@@viewOff:propTypes
 
@@ -28,8 +31,20 @@ export const Tiles = createVisualComponent({
     //@@viewOff:defaultProps
 
     render(props) {
+
+        //@@viewOn:hooks
+        const [open, close] = useContextModal();
+        const { data, handlerMap } = useJoke();
+    //@@viewOff:hooks
         //@@viewOn:private
-        const { data } = props;
+        function handleOpenDetailsModal(data) {
+            open({
+                header: <JokeUpdateHeader />,
+                content: <JokeUpdateForm data={data} closeModal={close} />,
+                footer: <JokeUpdateControls />
+
+            });
+        }
         //@@viewOff:private
 
         //@@viewOn:interface
@@ -52,8 +67,9 @@ export const Tiles = createVisualComponent({
                     tileMaxWidth={400}
                     tileSpacing={8}
                     rowSpacing={8}
+                    
                 >
-                    <CustomTile />
+                    <CustomTile handleOpenDetailsModal={handleOpenDetailsModal}/>
                 </Uu5Tiles.Grid>
             </Uu5Tiles.ControllerProvider>
         ) : null;

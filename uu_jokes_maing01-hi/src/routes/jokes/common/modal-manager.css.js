@@ -5,23 +5,20 @@
 import Config from "../config/config";
 
 const modalFix = () => Config.Css.css`
-  width: 100%!important;
-
-  .uu5-bricks-alert-header-wrapper {
-    .uu5-bricks-alert-content {
-      width: calc(100% - 48px);
-    }
-
-    .uu5-common-error.plus4u5-bricks-error {
-      width: 100%;
-    }
-
-    .uu5-bricks-alert-content {
-      justify-content: start;
-    }
-  }
+  padding: 20px;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  border: none;
 `;
+
+const deleteButton = () => Config.Css.css`
+margin-left: 30px;
+padding-left: 15px;
+padding-right: 15px;
+`
 
 export default {
   modalFix,
+  deleteButton
 };

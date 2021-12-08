@@ -2,6 +2,7 @@
 import UU5 from "uu5g04";
 import { createVisualComponent } from "uu5g04-hooks";
 import Config from "./config/config";
+import Css from "../jokes/common/modal-manager.css";
 //@@viewOff:imports
 
 const STATICS = {
@@ -16,7 +17,8 @@ export const CustomTile = createVisualComponent({
 
   //@@viewOn:propTypes
   propTypes: {
-    data: UU5.PropTypes.object
+    data: UU5.PropTypes.object,
+    handleOpenDetailsModal: UU5.PropTypes.func
   },
   //@@viewOff:propTypes
 
@@ -42,11 +44,18 @@ export const CustomTile = createVisualComponent({
 
     return currentNestingLevel ? (
       <div {...attrs}>
+        <UU5.Bricks.Card className="uu5-common-padding-s" width={250}>
         <UU5.Bricks.Text content={joke?.data?.name} />
         <UU5.Bricks.Text content={joke?.data?.id} />
         <UU5.Bricks.Text content={joke?.data?.uuIdentityName} />
-        <UU5.Bricks.Button colorSchema="blue" className="active" bgStyle="outline">Update<UU5.Bricks.Icon
-          icon="mdi-apple" /></UU5.Bricks.Button>
+        <UU5.Bricks.Button colorSchema="orange" className="active" bgStyle="outline"
+          onClick={() => props.handleOpenDetailsModal(joke?.data)}>Update<UU5.Bricks.Icon
+              icon="plus4u-pencil" />
+          </UU5.Bricks.Button>
+          <UU5.Bricks.Button className={Css.deleteButton()} colorSchema="red" borderRadius="2px"
+            onClick={() => onDelete(joke.id)}><UU5.Bricks.Icon
+              icon="plus4u5-trash-can" />Delete</UU5.Bricks.Button>
+        </UU5.Bricks.Card>
       </div>
     ) : null;
     //@@viewOff:render

@@ -8,6 +8,7 @@ import UU5 from "uu5g04";
 import { createComponent, useRef, useContext } from "uu5g04-hooks";
 
 import Config from "../config/config";
+import Css from "./modal-manager.css"
 //@@viewOff:imports
 
 const ContextModalStore = UU5.Common.Context.create();
@@ -66,7 +67,7 @@ export const ModalManager = createComponent({
     //@@viewOn:render
     return (
       <ContextModalStore.Provider value={[open, close, showAlert, getConfirmRef]}>
-        <UU5.Forms.ContextModal size="l" ref={modalRef} />
+        <UU5.Forms.ContextModal className={Css.modalFix()} size="l" ref={modalRef} />
         <UU5.Bricks.AlertBus colorSchema={UU5.Environment.colorSchemaMap.green.color} ref={alertBusRef} />
         <UU5.Bricks.ConfirmModal ref={confirmRef} />
         {props.children}
